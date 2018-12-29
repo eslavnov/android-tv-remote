@@ -35,9 +35,10 @@ def main():
         return print("Please set your TV's IP-address with a --host parameter")
 
     if args.input is None:
-        return print("Please set an input mode (1-6) with an --input parameter")
+        return print("Please set an input mode (1-6 or 'wakeup') with an --input parameter")
 
-    sources={
+    keycodes={
+        'wakeup': 'KEYCODE_WAKEUP',
         1: "KEYCODE_F1",
         2: "KEYCODE_F2",
         3: "KEYCODE_F3",
@@ -48,9 +49,9 @@ def main():
 
     handle_connection(args.host)
 
-    if int(args.input) in sources:
+    if int(args.input) in keycodes:
         try:
-            subprocess.check_output(['adb', 'shell', 'input', 'keyevent', sources[int(args.input)]])
+            subprocess.check_output(['adb', 'shell', 'input', 'keyevent', keycodes[int(args.input)]])
         except:
             print("Error connecting to TV")
     else:
