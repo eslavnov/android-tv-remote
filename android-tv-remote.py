@@ -52,7 +52,11 @@ def main():
         try:
             subprocess.check_output(['adb', 'shell', 'input', 'keyevent', sources[int(args.input)]])
         except:
-            print("Error connecting to TV")
+            try:
+                print("Can't execute adb cmd, retry...")
+                subprocess.check_output(['adb', 'shell', 'input', 'keyevent', sources[int(args.input)]])
+            except:
+                print("Error connecting to TV")
     else:
         print("Unknown input (should be a value between 1-6):", args.input)
 
